@@ -5,9 +5,10 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists
 
 # installing rust
+ENV RUSTUP_HOME=/usr/local/rustup
+ENV CARGO_HOME=/usr/local/cargo
+ENV PATH=/usr/local/cargo/bin:$PATH
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
-ENV CARGO_HOME="/root/.cargo"
-ENV PATH="/root/.cargo/bin:$PATH"
 
 # installing commands
 RUN cargo install wasm-pack \
@@ -17,4 +18,4 @@ RUN cargo install wasm-pack \
 # disable sandbox for restricted environments
 ENV MOZ_DISABLE_CONTENT_SANDBOX=1
 
-CMD ["/root/.cargo/bin/wasm-pack", "test", "--headless", "--firefox"]
+CMD ["/usr/local/cargo/bin/wasm-pack", "test", "--headless", "--firefox"]
