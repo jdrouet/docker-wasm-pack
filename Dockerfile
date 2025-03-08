@@ -6,6 +6,7 @@ RUN apt-get update \
 
 # installing rust
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
+ENV CARGO_HOME="$HOME/.cargo"
 ENV PATH="$CARGO_HOME/bin:$PATH"
 
 # installing commands
