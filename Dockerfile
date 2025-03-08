@@ -27,8 +27,15 @@ RUN set -eux; \
     arm64) BINARYEN_ARCH=aarch64 ;; \
     esac; \
     curl -L -o /tmp/binaryen-version_${BINARYEN_VERSION}-${BINARYEN_ARCH}-linux.tar.gz https://github.com/WebAssembly/binaryen/releases/download/version_${BINARYEN_VERSION}/binaryen-version_${BINARYEN_VERSION}-${BINARYEN_ARCH}-linux.tar.gz \
-    && cd /usr/local && tar -xvf /tmp/binaryen-version_${BINARYEN_VERSION}-${BINARYEN_ARCH}-linux.tar.gz --strip-components=1 \
+    && cd /usr/local && tar -xvf /tmp/binaryen-version_${BINARYEN_VERSION}-${BINARYEN_ARCH}-linux.tar.gz \
+    && mv binaryen-version_${BINARYEN_VERSION} binaryen \
     && rm -rf /tmp/binaryen-version_${BINARYEN_VERSION}-${BINARYEN_ARCH}-linux.tar.gz \
     && ldconfig
+
+# set environment variables for Binaryen
+ENV PATH=/usr/local/binaryen/bin:$PATH
+ENV LD_LIBRARY_PATH="/usr/local/binaryen/lib:$LD_LIBRARY_PATH"
+ENV CPLUS_INCLUDE_PATH="/usr/local/binaryen/include:$CPLUS_INCLUDE_PATH"
+ENV CPATH="/usr/local/binaryen/include:$CPATH"
 
 CMD ["/usr/local/cargo/bin/wasm-pack", "test", "--headless", "--firefox"]
