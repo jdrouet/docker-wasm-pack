@@ -9,7 +9,6 @@ ENV RUSTUP_HOME=/usr/local/rustup
 ENV CARGO_HOME=/usr/local/cargo
 ENV PATH=/usr/local/cargo/bin:$PATH
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
-RUN rustup target install wasm32-unknown-unknown
 
 # installing commands
 RUN cargo install wasm-pack \
