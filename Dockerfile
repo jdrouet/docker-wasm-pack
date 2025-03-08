@@ -34,8 +34,8 @@ RUN set -eux; \
 
 # set environment variables for Binaryen
 ENV PATH=/usr/local/binaryen/bin:$PATH
-ENV LD_LIBRARY_PATH="/usr/local/binaryen/lib:$LD_LIBRARY_PATH"
-ENV CPLUS_INCLUDE_PATH="/usr/local/binaryen/include:$CPLUS_INCLUDE_PATH"
-ENV CPATH="/usr/local/binaryen/include:$CPATH"
+# ENV LD_LIBRARY_PATH="/usr/local/binaryen/lib:$LD_LIBRARY_PATH"
+# ENV CPLUS_INCLUDE_PATH="/usr/local/binaryen/include:$CPLUS_INCLUDE_PATH"
+# ENV CPATH="/usr/local/binaryen/include:$CPATH"
 
 CMD ["/usr/local/cargo/bin/wasm-pack", "test", "--headless", "--firefox"]

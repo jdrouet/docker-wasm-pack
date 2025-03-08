@@ -24,6 +24,10 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESSTOKEN }}
 
+      - name: get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
       - name: set up qemu
         uses: docker/setup-qemu-action@v3
 
@@ -35,5 +39,6 @@ jobs:
       - name: build and push
         uses: docker/build-push-action@v6
         with:
+          platforms: linux/amd64,linux/arm64
           push: ${{ github.ref == 'refs/heads/main' }}
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/wasm-pack:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/wasm-pack:latest,${{ secrets.DOCKER_HUB_USERNAME }}/wasm-pack:weekly,${{ secrets.DOCKER_HUB_USERNAME }}/wasm-pack:${{ steps.date.outputs.date }}
