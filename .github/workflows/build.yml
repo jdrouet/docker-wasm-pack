@@ -3,6 +3,8 @@ name: building docker image
 on:
   workflow_call:
   pull_request:
+  schedule:
+    - cron: "0 4 * * 3"
   push:
     branches:
       - main
