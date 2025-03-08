@@ -19,4 +19,17 @@ RUN cargo install wasm-pack \
 # disable sandbox for restricted environments
 ENV MOZ_DISABLE_CONTENT_SANDBOX=1
 
+# install binaryen
+ARG BINARYEN_VERSION=117
+RUN set -eux; \
+    dpkgArch="$(dpkg --print-architecture)"; \
+    case "${dpkgArch##*-}" in \
+    amd64) BINARYEN_ARCH=x86_64 ;; \
+    arm64) BINARYEN_ARCH=aarch64 ;; \
+    esac; \
+    curl -L -o /tmp/binaryen-version_${BINARYEN_VERSION}-${BINARYEN_ARCH}-linux.tar.gz https://github.com/WebAssembly/binaryen/releases/download/version_${BINARYEN_VERSION}/binaryen-version_${BINARYEN_VERSION}-${BINARYEN_ARCH}-linux.tar.gz \
+    && cd /usr/local && tar -xvf /tmp/binaryen-version_${BINARYEN_VERSION}-${BINARYEN_ARCH}-linux.tar.gz --strip-components=1 \
+    && rm -rf /tmp/binaryen-version_${BINARYEN_VERSION}-${BINARYEN_ARCH}-linux.tar.gz \
+    && ldconfig
+
 CMD ["/usr/local/cargo/bin/wasm-pack", "test", "--headless", "--firefox"]
