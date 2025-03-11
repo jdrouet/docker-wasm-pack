@@ -7,6 +7,7 @@ A Docker image for building and testing WebAssembly projects using wasm-pack wit
 - Based on Debian Sid
 - Includes Rust toolchain with wasm-pack and wasm-bindgen-cli
 - Firefox ESR and geckodriver for headless testing
+- Chromium and Chromium Web Driver
 - Binaryen tools for WebAssembly optimization
 - Weekly automated builds
 

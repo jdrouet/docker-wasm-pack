@@ -1,7 +1,7 @@
 FROM debian:sid
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends curl build-essential ca-certificates firefox-esr \
+    && apt-get install -y --no-install-recommends curl build-essential ca-certificates firefox-esr chromium chromium-driver \
     && rm -rf /var/lib/apt/lists
 
 # installing rust
@@ -34,8 +34,5 @@ RUN set -eux; \
 
 # set environment variables for Binaryen
 ENV PATH=/usr/local/binaryen/bin:$PATH
-# ENV LD_LIBRARY_PATH="/usr/local/binaryen/lib:$LD_LIBRARY_PATH"
-# ENV CPLUS_INCLUDE_PATH="/usr/local/binaryen/include:$CPLUS_INCLUDE_PATH"
-# ENV CPATH="/usr/local/binaryen/include:$CPATH"
 
 CMD ["/usr/local/cargo/bin/wasm-pack", "test", "--headless", "--firefox"]
